@@ -847,3 +847,5 @@ MonoBehaviour:
   warpFrequency: 3
   warpSpeed: 0.5
   warpThickness: 0.1
+  effectTint: {r: 1, g: 1, b: 1, a: 1}
+  warpStrength: 1

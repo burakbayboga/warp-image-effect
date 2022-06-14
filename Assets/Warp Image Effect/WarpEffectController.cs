@@ -7,9 +7,16 @@ public class WarpEffectController : MonoBehaviour
 	public Material warpMaterialReference;
 	public float warpFrequency;
 	public float warpSpeed;
+	[Range(0f, 0.3f)]
 	public float warpThickness;
 
-	private Color _effectTint;
+	[HideInInspector]
+	public Color effectTint;
+
+	// how much the pixels that are inside the affected area will be warped
+	// values more than 1 will result in exaggerated visuals
+	[HideInInspector]
+	public float warpStrength;
 
 	private Material warpMaterial;
 
@@ -27,6 +34,8 @@ public class WarpEffectController : MonoBehaviour
 
 		warpData.x = warpCenter.x;
 		warpData.y = warpCenter.y;
+		warpMaterial.SetColor("_EffectTint", effectTint);
+		warpMaterial.SetFloat("_WarpStrength", warpStrength);
 	}
 
 	private void Update()
@@ -38,6 +47,24 @@ public class WarpEffectController : MonoBehaviour
 		warpData.z = radiusStart;
 		warpData.w = radiusEnd;
 		warpMaterial.SetVector("_WarpData", warpData);
+	}
+
+	public void UpdateEffectTint(Color _effectTint)
+	{
+		if (Application.isPlaying)
+		{
+			effectTint = _effectTint;
+			warpMaterial.SetColor("_EffectTint", effectTint);
+		}
+	}
+
+	public void UpdateWarpStrength(float _warpStrength)
+	{
+		if (Application.isPlaying)
+		{
+			warpStrength = _warpStrength;
+			warpMaterial.SetFloat("_WarpStrength", warpStrength);
+		}
 	}
 
 	private void GetMouseInput()

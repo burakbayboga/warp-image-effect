@@ -9,9 +9,6 @@ Shader "Custom/WarpEffect"
 
 		// effect texture to render on top of the warped area
 		_EffectTex ("Effect Texture", 2D) = "white" {}
-
-		// color for the effect texture
-		_EffectTint ("Effect Tint", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -41,6 +38,7 @@ Shader "Custom/WarpEffect"
 			sampler2D _NoiseTex;
 			sampler2D _EffectTex;
 			fixed4 _EffectTint;
+			float _WarpStrength;
 			float4 _WarpData;		// x, y: effect center in viewport space   z: warp radius start   w: warp radius end
 			float _HeightToWidthRatio;
 
@@ -58,7 +56,6 @@ Shader "Custom/WarpEffect"
 				fixed4 effectColor;
 				fixed distortionScale = 0;
 				fixed applyEffect = 0;
-
 
 				// get vector pointing from current pixel to the effect center
 				float2 pixelToCenter = _WarpData.xy - i.uv;
@@ -96,12 +93,14 @@ Shader "Custom/WarpEffect"
 				// sample the noise texture to warp pixel positions and calculate the final uv coordinates
 				float2 noise = tex2D(_NoiseTex, i.uv).rg;
 				noise = (noise * 2 - 1) / 10;
-				noise *= distortionScale;
+				noise *= distortionScale * _WarpStrength;
 				float2 distortion = applyEffect ? noise : 0;
 				float2 finalUv = i.uv - distortion;
 
-				// sample the final texture with updated uv coordinates and return it
+				// sample the final texture with updated uv coordinates
 				fixed4 colorRaw = tex2D(_MainTex, finalUv);
+
+				// add the effect color on top of updated final texture
 				fixed4 finalColor = colorRaw + effectColor;
 				return finalColor;
             }
