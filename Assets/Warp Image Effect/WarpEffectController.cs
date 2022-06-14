@@ -14,7 +14,7 @@ public class WarpEffectController : MonoBehaviour
 	private Material warpMaterial;
 
 	private Vector4 warpData;
-	private Vector2 warpCenter = new Vector2(-10f, -1f);
+	private Vector2 warpCenter = new Vector2(0.5f, 0.5f);
 	private float warpTimer;
 
 	private void Awake()
@@ -23,10 +23,7 @@ public class WarpEffectController : MonoBehaviour
 		
 		float height = Screen.height;
 		float width = Screen.width;
-		Vector2 worldTopRight = Camera.main.ScreenToWorldPoint(new Vector2(width, height));
-		Vector4 worldEdgeData = new Vector4(worldTopRight.x * 2f, worldTopRight.y * 2f,
-												worldTopRight.x, worldTopRight.y);
-		warpMaterial.SetVector("_WorldEdgeData", worldEdgeData);
+		warpMaterial.SetFloat("_HeightToWidthRatio", height / width);
 
 		warpData.x = warpCenter.x;
 		warpData.y = warpCenter.y;
@@ -51,6 +48,7 @@ public class WarpEffectController : MonoBehaviour
 		}
 	}
 
+	// Apply the warp material on the rendered frame
 	private void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
 		Graphics.Blit(source, destination, warpMaterial);
@@ -59,7 +57,6 @@ public class WarpEffectController : MonoBehaviour
 	public void SetWarpCenter(Vector2 _warpCenter)
 	{
 		warpCenter = Camera.main.ScreenToViewportPoint(_warpCenter);
-		//warpCenter = _warpCenter;
 		warpData.x = warpCenter.x;
 		warpData.y = warpCenter.y;
 		warpTimer = 0f;
