@@ -20,6 +20,7 @@ public class WarpEffectController : MonoBehaviour
 
 	private Material warpMaterial;
 
+	// warpData is passed to the shader and updated every frame to configure the effect
 	private Vector4 warpData;
 	private Vector2 warpCenter = new Vector2(0.5f, 0.5f);
 	private float warpTimer;
@@ -38,9 +39,17 @@ public class WarpEffectController : MonoBehaviour
 		warpMaterial.SetFloat("_WarpStrength", warpStrength);
 	}
 
+	// Apply the warp material on the rendered frame
+	private void OnRenderImage(RenderTexture source, RenderTexture destination)
+	{
+		Graphics.Blit(source, destination, warpMaterial);
+	}
+
 	private void Update()
 	{
 		GetMouseInput();
+
+		// effect area calculations are done here to simplify the shader itself
 		warpTimer = (warpTimer + Time.deltaTime) % warpFrequency;
 		float radiusStart = warpTimer * warpSpeed;
 		float radiusEnd = radiusStart + warpThickness;
@@ -75,11 +84,6 @@ public class WarpEffectController : MonoBehaviour
 		}
 	}
 
-	// Apply the warp material on the rendered frame
-	private void OnRenderImage(RenderTexture source, RenderTexture destination)
-	{
-		Graphics.Blit(source, destination, warpMaterial);
-	}
 
 	public void SetWarpCenter(Vector2 _warpCenter)
 	{
