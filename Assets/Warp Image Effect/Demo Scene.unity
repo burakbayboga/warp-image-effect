@@ -645,13 +645,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035582998}
-  m_LocalRotation: {x: -0.12764253, y: -0.15486637, z: -0.02018234, w: 0.97944707}
+  m_LocalRotation: {x: -0.20479289, y: -0.053014513, z: -0.011109112, w: 0.9773055}
   m_LocalPosition: {x: -12.53, y: -1.65, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -14.85, y: -17.97, z: 0}
+  m_LocalEulerAnglesHint: {x: -23.67, y: -6.21, z: 0}
 --- !u!1 &1142222440
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +800,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 14
   m_Depth: -1
   m_CullingMask:
@@ -825,7 +825,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003330575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -23.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -847,5 +847,6 @@ MonoBehaviour:
   warpFrequency: 3
   warpSpeed: 0.5
   warpThickness: 0.1
+  effectRotationSpeed: 0
   effectTint: {r: 1, g: 1, b: 1, a: 1}
   warpStrength: 1

@@ -41,6 +41,7 @@ Shader "Custom/WarpEffect"
 			float _WarpStrength;
 			float4 _WarpData;		// x, y: effect center in viewport space   z: warp radius start   w: warp radius end
 			float _HeightToWidthRatio;
+			float4 _EffectRotationFactors;
 
             v2f VertexFunction(appdata v)
             {
@@ -83,7 +84,13 @@ Shader "Custom/WarpEffect"
 				distortionScale = warpFactor > 0.5 ? (1 - warpFactor) : warpFactor;
 
 				// calculate uv coordinates for the effect texture
-				float2 effectUv = -pixelToCenterNormalized * warpFactor * 0.5 + float2(0.5, 0.5);
+				// also apply rotation to the effect uv coordinates
+				float2 centerToPixel = -pixelToCenterNormalized;
+				float2 centerToPixelRotated;
+				centerToPixelRotated.x = centerToPixel.x * _EffectRotationFactors.x - centerToPixel.y * _EffectRotationFactors.y;
+				centerToPixelRotated.y = centerToPixel.x * _EffectRotationFactors.y + centerToPixel.y * _EffectRotationFactors.x;
+				float2 effectUv = centerToPixelRotated * warpFactor * 0.5 + float2(0.5, 0.5);
+
 
 				// sample the effect texture and apply color to it
 				effectColor = applyEffect ? tex2D(_EffectTex, effectUv) : 0;

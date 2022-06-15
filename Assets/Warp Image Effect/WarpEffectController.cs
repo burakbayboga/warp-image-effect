@@ -9,6 +9,8 @@ public class WarpEffectController : MonoBehaviour
 	public float warpSpeed;
 	[Range(0f, 0.3f)]
 	public float warpThickness;
+	public float effectRotationSpeed;
+	public bool simulate = true;
 
 	[HideInInspector]
 	public Color effectTint;
@@ -24,6 +26,8 @@ public class WarpEffectController : MonoBehaviour
 	private Vector4 warpData;
 	private Vector2 warpCenter = new Vector2(0.5f, 0.5f);
 	private float warpTimer;
+	private float currentEffectRotation = 0f;
+	private float twoPi = 2f * Mathf.PI;
 
 	private void Awake()
 	{
@@ -49,6 +53,14 @@ public class WarpEffectController : MonoBehaviour
 	{
 		GetMouseInput();
 
+		if (simulate)
+		{
+			UpdateShaderParameters();
+		}
+	}
+
+	private void UpdateShaderParameters()
+	{
 		// effect area calculations are done here to simplify the shader itself
 		warpTimer = (warpTimer + Time.deltaTime) % warpFrequency;
 		float radiusStart = warpTimer * warpSpeed;
@@ -56,6 +68,12 @@ public class WarpEffectController : MonoBehaviour
 		warpData.z = radiusStart;
 		warpData.w = radiusEnd;
 		warpMaterial.SetVector("_WarpData", warpData);
+
+		currentEffectRotation = (currentEffectRotation + Time.deltaTime * effectRotationSpeed);
+		float effectRotRad = currentEffectRotation * Mathf.Deg2Rad;
+		Vector2 effectRotationFactors = new Vector2(Mathf.Cos(effectRotRad), Mathf.Sin(effectRotRad));
+
+		warpMaterial.SetVector("_EffectRotationFactors", effectRotationFactors);
 	}
 
 	public void UpdateEffectTint(Color _effectTint)
