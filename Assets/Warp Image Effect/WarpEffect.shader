@@ -37,11 +37,19 @@ Shader "Custom/WarpEffect"
             sampler2D _MainTex;
 			sampler2D _NoiseTex;
 			sampler2D _EffectTex;
+
+			// the values below can be modifier by a script to achieve different effects
+			// -------------------------
+			// color of the rendered effect texture
 			fixed4 _EffectTint;
+			// use this value to achieve more exaggerated effects
 			float _WarpStrength;
+			// warp data is used to tell the shader where to apply the warp effect
 			float4 _WarpData;		// x, y: effect center in viewport space   z: warp radius start   w: warp radius end
+			// this value is used to generate a circular effect. different values can be used to achieve an elliptic shape
 			float _HeightToWidthRatio;
-			float4 _EffectRotationFactors;
+			// effect rotation factors are multiplied with uv coordinates to achive rotation matrix multiplication
+			float4 _EffectRotationFactors;	// x: cosine of the rotation angle    y: sine of the rotation angle
 
             v2f VertexFunction(appdata v)
             {

@@ -5,12 +5,6 @@ using UnityEngine;
 public class WarpEffectController : MonoBehaviour
 {
 	public Material warpMaterialReference;
-	public float warpFrequency;
-	public float warpSpeed;
-	[Range(0f, 0.3f)]
-	public float warpThickness;
-	public float effectRotationSpeed;
-	public bool simulate = true;
 
 	[HideInInspector]
 	public Color effectTint;
@@ -24,10 +18,6 @@ public class WarpEffectController : MonoBehaviour
 
 	// warpData is passed to the shader and updated every frame to configure the effect
 	private Vector4 warpData;
-	private Vector2 warpCenter = new Vector2(0.5f, 0.5f);
-	private float warpTimer;
-	private float currentEffectRotation = 0f;
-	private float twoPi = 2f * Mathf.PI;
 
 	private void Awake()
 	{
@@ -37,8 +27,6 @@ public class WarpEffectController : MonoBehaviour
 		float width = Screen.width;
 		warpMaterial.SetFloat("_HeightToWidthRatio", height / width);
 
-		warpData.x = warpCenter.x;
-		warpData.y = warpCenter.y;
 		warpMaterial.SetColor("_EffectTint", effectTint);
 		warpMaterial.SetFloat("_WarpStrength", warpStrength);
 	}
@@ -49,33 +37,26 @@ public class WarpEffectController : MonoBehaviour
 		Graphics.Blit(source, destination, warpMaterial);
 	}
 
-	private void Update()
+	public void UpdateRadius(float radiusInner, float radiusOuter)
 	{
-		GetMouseInput();
-
-		if (simulate)
-		{
-			UpdateShaderParameters();
-		}
-	}
-
-	private void UpdateShaderParameters()
-	{
-		// effect area calculations are done here to simplify the shader itself
-		warpTimer = (warpTimer + Time.deltaTime) % warpFrequency;
-		float radiusStart = warpTimer * warpSpeed;
-		float radiusEnd = radiusStart + warpThickness;
-		warpData.z = radiusStart;
-		warpData.w = radiusEnd;
+		warpData.z = radiusInner;
+		warpData.w = radiusOuter;
 		warpMaterial.SetVector("_WarpData", warpData);
-
-		currentEffectRotation = (currentEffectRotation + Time.deltaTime * effectRotationSpeed);
-		float effectRotRad = currentEffectRotation * Mathf.Deg2Rad;
-		Vector2 effectRotationFactors = new Vector2(Mathf.Cos(effectRotRad), Mathf.Sin(effectRotRad));
-
-		warpMaterial.SetVector("_EffectRotationFactors", effectRotationFactors);
 	}
 
+	public void UpdateCenter(Vector2 center)
+	{
+		warpData.x = center.x;
+		warpData.y = center.y;
+		warpMaterial.SetVector("_WarpData", warpData);
+	}
+
+	public void UpdateRotation(Vector2 rotationFactors)
+	{
+		warpMaterial.SetVector("_EffectRotationFactors", rotationFactors);
+	}
+
+	// called by custom inspector to update effect at runtime
 	public void UpdateEffectTint(Color _effectTint)
 	{
 		if (Application.isPlaying)
@@ -85,6 +66,7 @@ public class WarpEffectController : MonoBehaviour
 		}
 	}
 
+	// called by custom inspector to update effect at runtime
 	public void UpdateWarpStrength(float _warpStrength)
 	{
 		if (Application.isPlaying)
@@ -92,22 +74,5 @@ public class WarpEffectController : MonoBehaviour
 			warpStrength = _warpStrength;
 			warpMaterial.SetFloat("_WarpStrength", warpStrength);
 		}
-	}
-
-	private void GetMouseInput()
-	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			SetWarpCenter(Input.mousePosition);
-		}
-	}
-
-
-	public void SetWarpCenter(Vector2 _warpCenter)
-	{
-		warpCenter = Camera.main.ScreenToViewportPoint(_warpCenter);
-		warpData.x = warpCenter.x;
-		warpData.y = warpCenter.y;
-		warpTimer = 0f;
 	}
 }
