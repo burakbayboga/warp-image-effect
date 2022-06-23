@@ -757,9 +757,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2003330578}
   - component: {fileID: 2003330577}
-  - component: {fileID: 2003330576}
   - component: {fileID: 2003330579}
-  - component: {fileID: 2003330580}
+  - component: {fileID: 2003330576}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -767,14 +766,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2003330576
-AudioListener:
+--- !u!114 &2003330576
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003330575}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2f668c7ce5cb04cb2444172ae0588f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warpThickness: 0.05
+  effectRotationSpeed: 400
+  maxRadius: 0.3
+  timeToMaxRadius: 2.2
 --- !u!20 &2003330577
 Camera:
   m_ObjectHideFlags: 0
@@ -844,21 +851,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef46f9311f075e648892c9e0cdb9e775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warpMaterialReference: {fileID: 2100000, guid: f03f6b5be593b1b47bdd3d77d645a8c1, type: 2}
-  effectTint: {r: 0.7924528, g: 0.16820934, b: 0.16820934, a: 1}
-  warpStrength: 1.17
---- !u!114 &2003330580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003330575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabd0ef8d28fb5241ab83a09a6a6bede, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectRotationSpeed: 0
-  radiusInner: 0
-  warpThickness: 0
+  effectTint: {r: 1, g: 1, b: 1, a: 1}
+  warpStrength: 1

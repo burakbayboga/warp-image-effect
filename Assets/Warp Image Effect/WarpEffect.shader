@@ -99,7 +99,6 @@ Shader "Custom/WarpEffect"
 				centerToPixelRotated.y = centerToPixel.x * _EffectRotationFactors.y + centerToPixel.y * _EffectRotationFactors.x;
 				float2 effectUv = centerToPixelRotated * warpFactor * 0.5 + float2(0.5, 0.5);
 
-
 				// sample the effect texture and apply color to it
 				effectColor = applyEffect ? tex2D(_EffectTex, effectUv) : 0;
 				effectColor *= _EffectTint;

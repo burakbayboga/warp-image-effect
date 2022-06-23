@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class WarpEffectController : MonoBehaviour
 {
-	public Material warpMaterialReference;
-
 	[HideInInspector]
-	public Color effectTint;
+	public Color effectTint = Color.white;
 
 	// how much the pixels that are inside the affected area will be warped
 	// values more than 1 will result in exaggerated visuals
 	[HideInInspector]
-	public float warpStrength;
+	public float warpStrength = 1f;
 
 	private Material warpMaterial;
 
@@ -21,7 +19,7 @@ public class WarpEffectController : MonoBehaviour
 
 	private void Awake()
 	{
-		warpMaterial = Instantiate(warpMaterialReference);
+		warpMaterial = Instantiate(Resources.Load("Warp Material") as Material);
 		
 		float height = Screen.height;
 		float width = Screen.width;

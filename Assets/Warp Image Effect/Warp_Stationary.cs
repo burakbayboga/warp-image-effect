@@ -11,7 +11,7 @@ public class Warp_Stationary : MonoBehaviour
 	public float radiusInner;
 
 	[HideInInspector]
-	public float warpThickness;
+	public float warpThickness = 0.05f;
 
 	private WarpEffectController warpController;
 
