@@ -757,8 +757,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2003330578}
   - component: {fileID: 2003330577}
-  - component: {fileID: 2003330579}
   - component: {fileID: 2003330576}
+  - component: {fileID: 2003330579}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -775,13 +775,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2003330575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e2f668c7ce5cb04cb2444172ae0588f, type: 3}
+  m_Script: {fileID: 11500000, guid: ef46f9311f075e648892c9e0cdb9e775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warpThickness: 0.05
-  effectRotationSpeed: 400
-  maxRadius: 0.3
-  timeToMaxRadius: 2.2
+  effectTint: {r: 0.90588236, g: 0.5686275, b: 0.003921569, a: 1}
+  warpStrength: 1.46
 --- !u!20 &2003330577
 Camera:
   m_ObjectHideFlags: 0
@@ -848,8 +846,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2003330575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef46f9311f075e648892c9e0cdb9e775, type: 3}
+  m_Script: {fileID: 11500000, guid: d020d992fe007c14789716b7e1df4940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectTint: {r: 1, g: 1, b: 1, a: 1}
-  warpStrength: 1
+  warpThickness: 0.08
+  effectRotationSpeed: -300
+  expandSpeed: 0.3
+  waveInterval: 2.5
